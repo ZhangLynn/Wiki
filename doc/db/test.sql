@@ -52,4 +52,9 @@ insert into ebook (id, name, description)
 values (1, 'Spring boot 入门教程', '零基础入门 Java 开发， 企业级应用开发最佳框架');
 insert into ebook (id, name, description)
 values (2, 'Vue 入门教程', '零基础入门 Vue 开发， 企业级应用开发最佳框架');
-
+insert into ebook (id, name, description)
+values (3, 'Python 入门教程', '零基础入门 Python 开发， 企业级应用开发最佳框架');
+insert into ebook (id, name, description)
+values (4, 'React 入门教程', '零基础入门 React 开发， 企业级应用开发最佳框架');
+insert into ebook (id, name, description)
+values (5, 'Go 入门教程', '零基础入门 Go 开发， 企业级应用开发最佳框架');

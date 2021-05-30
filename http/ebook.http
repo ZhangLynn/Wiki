@@ -1,3 +1,3 @@
-GET http://localhost:1107/ebook/list?name=Vue
+GET http://localhost:1107/ebook/list
 #Accept: application/json
 
