@@ -1,5 +1,6 @@
 package com.ccb.wiki.controller;
 
+import com.ccb.wiki.domain.Test;
 import com.ccb.wiki.service.TestService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -9,6 +10,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
+import java.util.List;
 
 @RestController
 public class TestController {
@@ -47,10 +49,10 @@ public class TestController {
         return "Hello World! Post，" + name;
     }
 
-//    @GetMapping("/test/list")
-//    public List<Test> list() {
-//        return testService.list();
-//    }
+    @GetMapping("/test/list")
+    public List<Test> list() {
+        return testService.list();
+    }
 //
 //    @RequestMapping("/redis/set/{key}/{value}")
 //    public String set(@PathVariable Long key, @PathVariable String value) {
