@@ -1,6 +1,7 @@
 package com.ccb.wiki.controller;
 
 import com.ccb.wiki.domain.Ebook;
+import com.ccb.wiki.resp.CommonResp;
 import com.ccb.wiki.service.EbookService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -20,8 +21,11 @@ public class EbookController {
     private static final Logger LOG = LoggerFactory.getLogger(EbookController.class);
 
     @GetMapping("/list")
-    public List<Ebook> list() {
-        return ebookService.list();
+    public CommonResp list() {
+        CommonResp<List<Ebook>> resp = new CommonResp();
+        List<Ebook> list = ebookService.list();
+        resp.setContent(list);
+        return resp;
     }
 
 }
