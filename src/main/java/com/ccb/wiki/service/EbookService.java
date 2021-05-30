@@ -5,11 +5,10 @@ import com.ccb.wiki.domain.EbookExample;
 import com.ccb.wiki.mapper.EbookMapper;
 import com.ccb.wiki.req.EbookQueryReq;
 import com.ccb.wiki.resp.EbookQueryResp;
-import org.springframework.beans.BeanUtils;
+import com.ccb.wiki.util.CopyUtil;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
-import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -24,14 +23,7 @@ public class EbookService {
         criteria.andNameLike("%" + req.getName() + "%");
 
         List<Ebook> ebookList = ebookMapper.selectByExample(ebookExample);
-        List<EbookQueryResp> ebookQueryRespList = new ArrayList<>();
-
-        for (Ebook ebook : ebookList) {
-            EbookQueryResp ebookResp = new EbookQueryResp();
-            BeanUtils.copyProperties(ebook, ebookResp);
-            ebookQueryRespList.add(ebookResp);
-        }
-
+        List<EbookQueryResp> ebookQueryRespList = CopyUtil.copyList(ebookList, EbookQueryResp.class);
         return ebookQueryRespList;
     }
 }
