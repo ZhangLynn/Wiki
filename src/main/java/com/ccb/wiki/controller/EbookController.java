@@ -1,7 +1,8 @@
 package com.ccb.wiki.controller;
 
-import com.ccb.wiki.domain.Ebook;
+import com.ccb.wiki.req.EbookQueryReq;
 import com.ccb.wiki.resp.CommonResp;
+import com.ccb.wiki.resp.EbookQueryResp;
 import com.ccb.wiki.service.EbookService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -21,9 +22,9 @@ public class EbookController {
     private static final Logger LOG = LoggerFactory.getLogger(EbookController.class);
 
     @GetMapping("/list")
-    public CommonResp list() {
-        CommonResp<List<Ebook>> resp = new CommonResp();
-        List<Ebook> list = ebookService.list();
+    public CommonResp list(EbookQueryReq req) {
+        CommonResp<List<EbookQueryResp>> resp = new CommonResp();
+        List<EbookQueryResp> list = ebookService.list(req);
         resp.setContent(list);
         return resp;
     }
