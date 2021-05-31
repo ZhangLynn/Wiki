@@ -4,7 +4,7 @@ package com.ccb.wiki.req;
  * Create by ling
  */
 
-public class EbookQueryReq {
+public class EbookQueryReq extends PageReq {
     private int id;
 
     private String name;
