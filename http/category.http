@@ -1,0 +1,20 @@
+GET http://localhost:1107/category/all
+#Accept: application/json
+
+###
+POST http://localhost:1107/category/save
+Content-Type: application/json
+
+{
+  "id": 101,
+  "name": "HTML",
+  "parent": 100,
+  "sort": 101
+}
+
+
+
+
+###
+GET http://localhost:1107/category/list?page=1&size=2
+#Accept: application/json
