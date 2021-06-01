@@ -40,8 +40,8 @@
                              targetPackage="com.ccb.wiki.mapper"
                              type="XMLMAPPER"/>
         <!--        <table tableName="ebook" domainObjectName="Ebook"/>-->
-        <table tableName="category"/>
-        <!--<table tableName="doc"/>-->
+        <!--        <table tableName="category"/>-->
+        <table tableName="doc"/>
         <!--<table tableName="content"/>-->
         <!--<table tableName="user"/>-->
         <!--        <table tableName="ebook_snapshot"/>-->
