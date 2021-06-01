@@ -1,6 +1,7 @@
 package com.ccb.wiki.controller;
 
 import com.ccb.wiki.req.UserQueryReq;
+import com.ccb.wiki.req.UserResetPwdReq;
 import com.ccb.wiki.req.UserSaveReq;
 import com.ccb.wiki.resp.CommonResp;
 import com.ccb.wiki.resp.PageResp;
@@ -51,6 +52,14 @@ public class UserController {
     public CommonResp delete(@PathVariable Long id) {
         CommonResp resp = new CommonResp<>();
         userService.delete(id);
+        return resp;
+    }
+
+    @PostMapping("/reset-password")
+    public CommonResp list(@Valid @RequestBody UserResetPwdReq req) {
+        req.setPassword(DigestUtils.md5DigestAsHex(req.getPassword().getBytes()));
+        CommonResp resp = new CommonResp();
+        userService.resetPwd(req);
         return resp;
     }
 

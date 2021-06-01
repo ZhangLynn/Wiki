@@ -6,6 +6,7 @@ import com.ccb.wiki.exception.BusinessException;
 import com.ccb.wiki.exception.BusinessExceptionCode;
 import com.ccb.wiki.mapper.UserMapper;
 import com.ccb.wiki.req.UserQueryReq;
+import com.ccb.wiki.req.UserResetPwdReq;
 import com.ccb.wiki.req.UserSaveReq;
 import com.ccb.wiki.resp.PageResp;
 import com.ccb.wiki.resp.UserQueryResp;
@@ -92,6 +93,11 @@ public class UserService {
         } else {
             return users.get(0);
         }
+    }
+
+    public void resetPwd(UserResetPwdReq req) {
+        User newUser = CopyUtil.copy(req, User.class);
+        userMapper.updateByPrimaryKeySelective(newUser);
     }
 
 }
