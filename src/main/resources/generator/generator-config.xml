@@ -39,10 +39,8 @@
         <javaClientGenerator targetProject="src/main/java"
                              targetPackage="com.ccb.wiki.mapper"
                              type="XMLMAPPER"/>
-
-        <!--        <table tableName="demo" domainObjectName="Demo"/>-->
-        <table tableName="ebook" domainObjectName="Ebook"/>
-        <!--<table tableName="category"/>-->
+        <!--        <table tableName="ebook" domainObjectName="Ebook"/>-->
+        <table tableName="category"/>
         <!--<table tableName="doc"/>-->
         <!--<table tableName="content"/>-->
         <!--<table tableName="user"/>-->
