@@ -31,7 +31,7 @@ create table demo
 ) engine = innodb
   default charset = utf8mb4 comment ='测试';
 
-drop table if exists `test`;
+drop table if exists `ebook`;
 create table ebook
 (
     id           bigint       not null comment 'id',
@@ -58,3 +58,42 @@ insert into ebook (id, name, description)
 values (4, 'React 入门教程', '零基础入门 React 开发， 企业级应用开发最佳框架');
 insert into ebook (id, name, description)
 values (5, 'Go 入门教程', '零基础入门 Go 开发， 企业级应用开发最佳框架');
+
+
+drop table if exists `category`;
+create table category
+(
+    id     bigint      not null comment 'id',
+    name   varchar(50) not null comment '名称',
+    parent bigint      not null comment '父id',
+    sort   int comment '顺序',
+    primary key (id)
+) engine = innodb
+  default charset = utf8mb4 comment '分类';
+
+insert into `category` (id, parent, name, sort)
+values (100, 000, '前端开发', 100);
+insert into `category` (id, parent, name, sort)
+values (101, 100, 'Vue', 101);
+insert into `category` (id, parent, name, sort)
+values (102, 100, 'React', 102);
+insert into `category` (id, parent, name, sort)
+values (200, 000, 'Java', 200);
+insert into `category` (id, parent, name, sort)
+values (201, 200, '基础应用', 201);
+insert into `category` (id, parent, name, sort)
+values (202, 200, '框架应用', 202);
+insert into `category` (id, parent, name, sort)
+values (300, 000, 'Python', 300);
+insert into `category` (id, parent, name, sort)
+values (301, 300, '基础应用', 301);
+insert into `category` (id, parent, name, sort)
+values (302, 300, '进阶方向应用', 302);
+insert into `category` (id, parent, name, sort)
+values (400, 000, '数据库', 400);
+insert into `category` (id, parent, name, sort)
+values (401, 400, 'MySQL', 401);
+insert into `category` (id, parent, name, sort)
+values (500, 000, '其它', 500);
+
+
