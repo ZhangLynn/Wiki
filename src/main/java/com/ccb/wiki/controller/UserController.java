@@ -8,6 +8,7 @@ import com.ccb.wiki.resp.UserQueryResp;
 import com.ccb.wiki.service.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.util.DigestUtils;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
@@ -40,6 +41,7 @@ public class UserController {
 
     @PostMapping("/save")
     public CommonResp list(@Valid @RequestBody UserSaveReq req) {
+        req.setPassword(DigestUtils.md5DigestAsHex(req.getPassword().getBytes()));
         CommonResp resp = new CommonResp();
         userService.save(req);
         return resp;
