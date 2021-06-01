@@ -2,6 +2,8 @@ package com.ccb.wiki.service;
 
 import com.ccb.wiki.domain.User;
 import com.ccb.wiki.domain.UserExample;
+import com.ccb.wiki.exception.BusinessException;
+import com.ccb.wiki.exception.BusinessExceptionCode;
 import com.ccb.wiki.mapper.UserMapper;
 import com.ccb.wiki.req.UserQueryReq;
 import com.ccb.wiki.req.UserSaveReq;
@@ -61,9 +63,15 @@ public class UserService {
     public void save(UserSaveReq req) {
         User user = CopyUtil.copy(req, User.class);
         if (ObjectUtils.isEmpty(req.getId())) {
-            // 新增
-            user.setId(snowFlake.nextId());
-            userMapper.insert(user);
+            if (ObjectUtils.isEmpty(getUserByLoginName(req.getLoginName()))) {
+                // 新增
+                user.setId(snowFlake.nextId());
+                userMapper.insert(user);
+            } else {
+                // 用户名已存在
+                throw new BusinessException(BusinessExceptionCode.USER_LOGIN_NAME_EXIST);
+            }
+
         } else {
             // 更新
             userMapper.updateByPrimaryKey(user);
@@ -72,6 +80,18 @@ public class UserService {
 
     public void delete(Long id) {
         userMapper.deleteByPrimaryKey(id);
+    }
+
+    public User getUserByLoginName(String loginName) {
+        UserExample userExample = new UserExample();
+        UserExample.Criteria criteria = userExample.createCriteria();
+        criteria.andLoginNameEqualTo(loginName);
+        List<User> users = userMapper.selectByExample(userExample);
+        if (ObjectUtils.isEmpty(users)) {
+            return null;
+        } else {
+            return users.get(0);
+        }
     }
 
 }
