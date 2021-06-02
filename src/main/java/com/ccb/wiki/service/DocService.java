@@ -5,6 +5,7 @@ import com.ccb.wiki.domain.Doc;
 import com.ccb.wiki.domain.DocExample;
 import com.ccb.wiki.mapper.ContentMapper;
 import com.ccb.wiki.mapper.DocMapper;
+import com.ccb.wiki.mapper.DocMapperCust;
 import com.ccb.wiki.req.DocQueryReq;
 import com.ccb.wiki.req.DocSaveReq;
 import com.ccb.wiki.resp.DocQueryResp;
@@ -32,6 +33,9 @@ public class DocService {
 
     @Resource
     private DocMapper docMapper;
+
+    @Resource
+    private DocMapperCust docMapperCust;
 
     @Resource
     private ContentMapper contentMapper;
@@ -96,14 +100,14 @@ public class DocService {
         LOG.info(String.valueOf(res));
     }
 
-//    public void delete(Long id) {
-//        docMapper.deleteByPrimaryKey(id);
-//        contentMapper.deleteByPrimaryKey(id);
-//    }
+    public void vote(Long id) {
+        docMapperCust.increaseVoteCount(id);
+    }
 
     public String findContent(Long id) {
         Content content = contentMapper.selectByPrimaryKey(id);
-        if (content != null) {
+        docMapperCust.increaseViewCount(id);
+        if (!ObjectUtils.isEmpty(content)) {
             return content.getContent();
         }
         return "";
