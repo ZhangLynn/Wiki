@@ -5,10 +5,12 @@ import com.ccb.wiki.domain.UserExample;
 import com.ccb.wiki.exception.BusinessException;
 import com.ccb.wiki.exception.BusinessExceptionCode;
 import com.ccb.wiki.mapper.UserMapper;
+import com.ccb.wiki.req.UserLoginReq;
 import com.ccb.wiki.req.UserQueryReq;
 import com.ccb.wiki.req.UserResetPwdReq;
 import com.ccb.wiki.req.UserSaveReq;
 import com.ccb.wiki.resp.PageResp;
+import com.ccb.wiki.resp.UserLoginResp;
 import com.ccb.wiki.resp.UserQueryResp;
 import com.ccb.wiki.util.CopyUtil;
 import com.ccb.wiki.util.SnowFlake;
@@ -98,6 +100,23 @@ public class UserService {
     public void resetPwd(UserResetPwdReq req) {
         User newUser = CopyUtil.copy(req, User.class);
         userMapper.updateByPrimaryKeySelective(newUser);
+    }
+
+    public UserLoginResp login(UserLoginReq req) {
+        User userDb = getUserByLoginName(req.getLoginName());
+        if (ObjectUtils.isEmpty(userDb)) {
+            LOG.info("用户名不存在, {}", req.getLoginName());
+            throw new BusinessException(BusinessExceptionCode.LOGIN_USER_ERROR);
+        } else {
+            if (!req.getPassword().equals(userDb.getPassword())) {
+                LOG.info("密码不对, 输入密码：{}, 数据库密码：{}", req.getPassword(), userDb.getPassword());
+                throw new BusinessException(BusinessExceptionCode.LOGIN_USER_ERROR);
+            } else {
+                UserLoginResp userLoginResp = CopyUtil.copy(userDb, UserLoginResp.class);
+                return userLoginResp;
+            }
+        }
+
     }
 
 }
