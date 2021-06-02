@@ -64,6 +64,7 @@ public class DocService {
         return pageResp;
     }
 
+    // 事务 保证两张表可以同时更新
     @Transactional
     public void save(DocSaveReq req) {
         Doc doc = CopyUtil.copy(req, Doc.class);
@@ -112,5 +113,10 @@ public class DocService {
         }
         return "";
     }
+
+    public void updateEbookInfo() {
+        docMapperCust.updateEbookInfo();
+    }
+
 
 }

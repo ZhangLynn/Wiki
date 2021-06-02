@@ -7,4 +7,5 @@ public interface DocMapperCust {
 
     int increaseVoteCount(Long id);
 
+    int updateEbookInfo();
 }
