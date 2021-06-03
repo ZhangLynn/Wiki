@@ -3,6 +3,8 @@ package com.ccb.wiki.service;
 import com.ccb.wiki.domain.Content;
 import com.ccb.wiki.domain.Doc;
 import com.ccb.wiki.domain.DocExample;
+import com.ccb.wiki.exception.BusinessException;
+import com.ccb.wiki.exception.BusinessExceptionCode;
 import com.ccb.wiki.mapper.ContentMapper;
 import com.ccb.wiki.mapper.DocMapper;
 import com.ccb.wiki.mapper.DocMapperCust;
@@ -11,6 +13,8 @@ import com.ccb.wiki.req.DocSaveReq;
 import com.ccb.wiki.resp.DocQueryResp;
 import com.ccb.wiki.resp.PageResp;
 import com.ccb.wiki.util.CopyUtil;
+import com.ccb.wiki.util.RedisUtil;
+import com.ccb.wiki.util.RequestContext;
 import com.ccb.wiki.util.SnowFlake;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
@@ -43,6 +47,9 @@ public class DocService {
 
     @Resource
     private WsService wsService;
+
+    @Resource
+    private RedisUtil redisUtil;
 
     public List<DocQueryResp> all(long ebookId) {
         DocExample docExample = new DocExample();
@@ -106,7 +113,13 @@ public class DocService {
     }
 
     public void vote(Long id) {
-        docMapperCust.increaseVoteCount(id);
+        // 远程IP+doc.id作为key，24小时内不能重复
+        String ip = RequestContext.getRemoteAddr();
+        if (redisUtil.validateRepeat("DOC_VOTE_" + id + "_" + ip, 3600 * 24)) {
+            docMapperCust.increaseVoteCount(id);
+        } else {
+            throw new BusinessException(BusinessExceptionCode.VOTE_REPEAT);
+        }
 
         Doc docDb = docMapper.selectByPrimaryKey(id);
         String logId = MDC.get("LOG_ID");
